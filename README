@@ -1,0 +1,150 @@
+# Clap To Open 👏💻
+
+A fun Python project that detects claps using your microphone and opens applications on macOS.
+
+Built to learn:
+
+* Real-time audio processing
+* Microphone input handling
+* Threshold detection
+* Event-driven programming
+* macOS automation with Python
+
+---
+
+# Features
+
+* Detects real-time claps from microphone input
+* Prevents multiple detections from a single clap
+* Opens different apps based on clap count
+* Simple and beginner-friendly code structure
+
+---
+
+# Tech Stack
+
+* Python
+* NumPy
+* SoundDevice
+
+---
+
+# Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/clap_to_open.git
+cd clap_to_open
+```
+
+Create virtual environment:
+
+```bash
+python3 -m venv venv
+```
+
+Activate virtual environment:
+
+```bash
+source venv/bin/activate
+```
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+# Run The Project
+
+```bash
+python clap.py
+```
+
+---
+
+# How It Works
+
+The microphone continuously captures audio samples.
+
+The program:
+
+1. Measures audio volume
+2. Detects sudden spikes
+3. Treats those spikes as claps
+4. Executes macOS commands
+
+Example:
+
+| Claps   | Action       |
+| ------- | ------------ |
+| 1 Clap  | Open Spotify |
+| 2 Claps | Open Chrome  |
+| 3 Claps | Open VS Code |
+
+---
+
+# Example macOS Commands
+
+Open Calculator:
+
+```python
+subprocess.run(["open", "-a", "Calculator"])
+```
+
+Open Spotify:
+
+```python
+subprocess.run(["open", "-a", "Spotify"])
+```
+
+---
+
+# Project Concepts Learned
+
+This project introduces:
+
+* Audio signal processing
+* Thresholding
+* Hysteresis
+* Edge detection
+* Cooldown systems
+* Real-time callbacks
+* System automation
+
+---
+
+# Future Improvements
+
+* Double clap accuracy improvements
+* FFT-based clap recognition
+* Background noise calibration
+* Machine learning clap classification
+* Custom gesture patterns
+* GUI version
+* Cross-platform support
+
+---
+
+# macOS Permissions
+
+If microphone access fails:
+
+Go to:
+
+System Settings → Privacy & Security → Microphone
+
+Enable access for:
+
+* Terminal
+  or
+* VS Code
+
+---
+
+# License
+
+MIT License
