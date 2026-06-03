@@ -7,22 +7,26 @@ import time
 SAMPLE_RATE = 44100
 THRESHOLD = 0.25
 
-# Clap detection state
+# Clap state
 clap_detected = False
 
 # Timing
 last_clap_time = 0
 
-# Number of claps
+# Clap counter
 clap_count = 0
 
-# Wait time before deciding final clap sequence
+# Wait after last clap
 CLAP_TIMEOUT = 1
+
+# Prevent repeated actions
+action_triggered = False
 
 
 def handle_claps(count):
 
     if count == 1:
+
         print("Opening YouTube")
 
         subprocess.run([
@@ -36,6 +40,7 @@ def handle_claps(count):
         ])
 
     elif count == 2:
+
         print("Opening GitHub")
 
         subprocess.run([
@@ -49,6 +54,7 @@ def handle_claps(count):
         ])
 
     elif count == 3:
+
         print("Opening ChatGPT")
 
         subprocess.run([
@@ -67,6 +73,7 @@ def detect_clap(indata, frames, time_info, status):
     global clap_detected
     global last_clap_time
     global clap_count
+    global action_triggered
 
     volume = np.linalg.norm(indata)
 
@@ -77,20 +84,30 @@ def detect_clap(indata, frames, time_info, status):
 
         clap_detected = True
 
+        # If starting fresh, allow actions again
+        if clap_count == 0:
+            action_triggered = False
+
         clap_count += 1
 
         last_clap_time = current_time
 
         print(f"👏 Clap count: {clap_count}")
 
-    # Reset detector when sound becomes quiet
+    # Reset clap detector
     elif volume < THRESHOLD * 0.5:
         clap_detected = False
 
-    # Decide action after timeout
-    if clap_count > 0 and current_time - last_clap_time > CLAP_TIMEOUT:
+    # Execute ONLY ONCE
+    if (
+        clap_count > 0
+        and not action_triggered
+        and current_time - last_clap_time > CLAP_TIMEOUT
+    ):
 
         handle_claps(clap_count)
+
+        action_triggered = True
 
         clap_count = 0
 
